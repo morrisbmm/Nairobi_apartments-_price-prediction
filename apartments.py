@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -153,10 +147,3 @@ for i in range(m):
     ss_r += (Y[i] - y_pred)**2
 r2 = 1 - (ss_r/ss_t)
 print(r2)
-
-
-# In[ ]:
-
-
-
-
