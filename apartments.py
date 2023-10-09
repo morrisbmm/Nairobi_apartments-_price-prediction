@@ -1,3 +1,5 @@
+# importing the required libraries
+
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -5,15 +7,14 @@ import os
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-
-# In[2]:
-
-
 data = pd.read_csv('apartments.csv', thousands=' ')
 data['rate'] = data.rate.str.contains('Per Month').astype(int)
 data["price"] = pd.to_numeric(data["price"])
 data.isnull().sum()
 data = data.dropna()
+
+# Mapping specific location names to numeric codes for 'location' column:
+
 #pd.value_counts(data['location'])  # getting the unique values
 data.loc[data['location'] == 'Kileleshwa, Nairobi','location'] = 1
 data.loc[data['location'] == 'Westlands, Nairobi','location'] = 2
@@ -34,27 +35,16 @@ data.loc[data['location'] == 'Off Othaya road, Lavington, Nairobi','location'] =
 data.loc[data['location'] == 'Jabavu court, Kilimani, Nairobi','location'] = 17
 data.head(5)
 
-
-# In[3]:
-
-
 X = data[["location","bedrooms","bathrooms"]].values
 y = data["price"].to_numpy()
 m = y.size
 
-
-# In[4]:
-
-
+# Handling rates: Replace zero rates with 30 and calculate 'Y' based on 'y'
 Rate = data['rate'].to_numpy()
 Rate[Rate == 0] = 30
 Y = y*Rate
 Y
 #price = np.stack([y, Rate], axis=1)
-
-
-# In[ ]:
-
 
 def plotData(X,Y):
     plt.plot(X, Y, 'ro', ms=10, mec='k')
@@ -62,13 +52,7 @@ def plotData(X,Y):
     plt.xlabel('Location,Number of bedrooms and bathrooms')
 
 
-# In[ ]:
-
-
 plotData(X,Y)
-
-
-# In[5]:
 
 
 X = np.concatenate([np.ones((m,1)), X], axis=1)
@@ -76,17 +60,10 @@ X = np.concatenate([np.ones((m,1)), X], axis=1)
 
 # ### Using the method of least squares
 
-# In[ ]:
-
-
 theta = np.zeros(X.shape[1])
 theta = np.linalg.inv(X.T@X)@X.T@Y
 theta
  
-
-
-# In[ ]:
-
 
 predicted_price = np.dot([1,11,3,3],theta)
 predicted_price
@@ -94,17 +71,11 @@ predicted_price
 
 # ### Using the batch gradient descent algorithm
 
-# In[6]:
-
-
 def computeCost(X,Y,theta):
     J = 0
     J = (1/(2*m))*np.sum((np.dot(X,theta)-y)**2)
     return J
     
-
-
-# In[7]:
 
 
 def gradientDescent(X, Y, theta, alpha, num_iters):
@@ -117,9 +88,6 @@ def gradientDescent(X, Y, theta, alpha, num_iters):
     return theta, J_history
 
 
-# In[8]:
-
-
 theta = np.zeros(4)
 iterations = 5000
 alpha  = 0.01
@@ -127,16 +95,8 @@ theta, J_history = gradientDescent(X ,y, theta, alpha, iterations)
 print(theta)
 print(J_history)
 
-
-# In[9]:
-
-
 predicted_price = np.dot([1,11,3,3],theta)
 predicted_price
-
-
-# In[10]:
-
 
 ss_t = 0
 ss_r = 0
