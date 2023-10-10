@@ -15,7 +15,7 @@ data = data.dropna()
 
 # Mapping specific location names to numeric codes for 'location' column:
 
-#pd.value_counts(data['location'])  # getting the unique values
+# pd.value_counts(data['location'])  # getting the unique values
 data.loc[data['location'] == 'Kileleshwa, Nairobi','location'] = 1
 data.loc[data['location'] == 'Westlands, Nairobi','location'] = 2
 data.loc[data['location'] == 'Kilimani, Nairobi','location'] = 3
@@ -58,7 +58,7 @@ plotData(X,Y)
 X = np.concatenate([np.ones((m,1)), X], axis=1)
 
 
-# ### Using the method of least squares
+### Using the method of least squares
 
 theta = np.zeros(X.shape[1])
 theta = np.linalg.inv(X.T@X)@X.T@Y
@@ -69,7 +69,7 @@ predicted_price = np.dot([1,11,3,3],theta)
 predicted_price
 
 
-# ### Using the batch gradient descent algorithm
+### Using the batch gradient descent algorithm
 
 def computeCost(X,Y,theta):
     J = 0
