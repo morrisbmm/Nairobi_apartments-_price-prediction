@@ -57,7 +57,6 @@ plotData(X,Y)
 
 X = np.concatenate([np.ones((m,1)), X], axis=1)
 
-
 ### Using the method of least squares
 
 theta = np.zeros(X.shape[1])
