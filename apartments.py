@@ -67,7 +67,6 @@ theta
 predicted_price = np.dot([1,11,3,3],theta)
 predicted_price
 
-
 ### Using the batch gradient descent algorithm
 
 def computeCost(X,Y,theta):
